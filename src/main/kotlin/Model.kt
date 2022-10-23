@@ -1,7 +1,7 @@
 import com.beust.klaxon.Klaxon
 
 data class Model(
-    val retailers: List<Retailer>, val warehouses: List<Warehouse>
+    val retailers: Set<Retailer>, val warehouses: Set<Warehouse>
 ) {
     companion object {
         fun fromJsonString(json: String): Model {
@@ -17,7 +17,7 @@ data class Model(
                 Warehouse(warehouse.name, warehouse.capacity, warehouse.cost, transportationCosts)
             }
 
-            return Model(retailers, warehouses)
+            return Model(retailers.toSet(), warehouses.toSet())
         }
     }
 }
