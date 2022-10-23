@@ -7,14 +7,14 @@ data class Model(
         fun fromJsonString(json: String): Model {
             val parsedJson = Klaxon().parse<ModelJson>(json)!!
 
-            val retailers = parsedJson.retailers.map { Retailer(demand = it) }
+            val retailers = parsedJson.retailers.map { Retailer(it.name, it.demand) }
 
             val warehouses = parsedJson.potential_warehouse_sites.mapIndexed { idx, warehouse ->
                 val transportationCosts = parsedJson.transportation_cost_matrix[idx].mapIndexed { retailerId, cost ->
                     retailers[retailerId] to cost
                 }.toMap()
 
-                Warehouse(warehouse.capacity, warehouse.cost, transportationCosts)
+                Warehouse(warehouse.name, warehouse.capacity, warehouse.cost, transportationCosts)
             }
 
             return Model(retailers, warehouses)
@@ -22,11 +22,11 @@ data class Model(
     }
 }
 
-data class Retailer(val demand: Int, var warehouse: Warehouse? = null)
+data class Retailer(val name: String, val demand: Int)
 
 data class Warehouse(
+    val name: String,
     val capacity: Int,
     val activationCost: Int,
     val transportationCost: Map<Retailer, Int>,
-    var activated: Boolean = false,
 )

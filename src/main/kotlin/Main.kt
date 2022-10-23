@@ -8,5 +8,5 @@ fun main(args: Array<String>) {
 
     val inputJson = File(args.first()).readText()
     val model = Model.fromJsonString(inputJson)
-    Solver(inputJson).solve()
+    Solver(model).solve()
 }
