@@ -22,30 +22,24 @@ class Solver(
             if (warehouse.capacity < solution.entries.filter { it.value == warehouse }.sumOf { it.key.demand }) 1 else 0
         }.sum()
 
-
     private fun hardConstraintsFailed() = solution.values.any { warehouse ->
         warehouse.capacity < solution.entries.filter { it.value == warehouse }.sumOf { it.key.demand }
     }
 
-
-    // Generate new solution returns new solution and description of the step
-    private fun step(): Pair<MutableMap<Retailer, Warehouse>, String> {
+    // Generate new solution returns new solution, by re-mapping Retailer to another Warehouse
+    private fun step(): MutableMap<Retailer, Warehouse> {
         val newSolution = solution.toMutableMap()
 
         val (retailer, warehouse) = solution.entries.random()
         val randomWarehouse = model.warehouses.minus(warehouse).random()
         newSolution[retailer] = randomWarehouse
 
-        return newSolution to "(${retailer.name}: ${warehouse.name}) -> (${retailer.name}: ${randomWarehouse.name})"
+        return newSolution
     }
 
-
     // Optimize using Late Acceptance Hill Climbing
-    fun solve(): Int {
-        val n = 1000
-        val earlyStopping = 10_000
-
-        val costList = MutableList(n) { calculateCost(solution)}
+    fun solveLAHC(n: Int = 1000, earlyStopping: Int = 10_000): Int {
+        val costList = MutableList(n) { calculateCost(solution) }
         var k = 0
         var iterationsNotImproved = 0
 
@@ -53,21 +47,19 @@ class Solver(
             k %= n
 
             val cost = calculateCost(solution)
-
-            val (newSolution, description) = step()
+            val newSolution = step()
             val newCost = calculateCost(newSolution)
-
 
             if (newCost - bestSolutionCost < 0) {
                 bestSolution = newSolution
                 bestSolutionCost = newCost
                 println("Found better solution after ${iterationsNotImproved + 1} steps, Best Cost: $bestSolutionCost")
                 iterationsNotImproved = 0
-            }else{
+            } else {
                 iterationsNotImproved += 1
             }
 
-            if ((newCost - cost < 0) or (newCost < costList[k])){
+            if ((newCost - cost < 0) or (newCost < costList[k])) {
                 solution = newSolution
             }
 
@@ -83,10 +75,11 @@ class Solver(
 
         println("Warehouse capacity exceeded: ${hardConstraintsFailed()}")
         println("Cost: ${calculateCost(bestSolution)}")
-        println("Warehouses activated ${bestSolution.values.map { it.name }.toSet()} ")
+        println("Warehouses used ${bestSolution.values.map { it.name }.toSet()} ")
         println("(Retailer:Warehouse) mapping: ")
+
         bestSolution.entries.forEach {
-            println("(${it.key.name}: ${it.value.name})")
+            println("(${it.key.name} [${it.key.demand}] -${it.value.transportationCost[it.key]}-> ${it.value.name} [${it.value.capacity}])")
         }
 
         return bestSolutionCost
