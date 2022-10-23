@@ -2,9 +2,9 @@
   "retailers": [
     { "name": "Retailer1", "demand": 80 },
     { "name": "Retailer2", "demand": 270 },
-    { "name": "Retailer2", "demand": 250 },
-    { "name": "Retailer3", "demand": 160 },
-    { "name": "Retailer4", "demand": 180 }
+    { "name": "Retailer3", "demand": 250 },
+    { "name": "Retailer4", "demand": 160 },
+    { "name": "Retailer5", "demand": 180 }
   ],
   "potential_warehouse_sites": [
     { "name":  "WH1", "capacity": 500, "cost": 1000 },
