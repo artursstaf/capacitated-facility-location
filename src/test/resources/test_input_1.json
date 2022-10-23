@@ -1,0 +1,13 @@
+{
+  "retailers": [80, 270, 250, 160, 180],
+  "potential_warehouse_sites": [
+    { "capacity": 500, "cost": 1000 },
+    { "capacity": 500, "cost": 1000 },
+    { "capacity": 500, "cost": 1000 }
+  ],
+  "transportation_cost_matrix": [
+    [4, 5, 6, 8, 10],
+    [6, 4, 3, 5, 8],
+    [9, 7, 4, 3, 4]
+  ]
+}
