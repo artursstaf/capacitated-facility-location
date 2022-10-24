@@ -2,8 +2,7 @@ class Solver(
     private val model: Model,
 ) {
     // Randomly initialize solution (Retailers to random Warehouse)
-    private var solution: Map<Retailer, Warehouse> =
-        model.retailers.associateWith { model.warehouses.random() }.toMutableMap()
+    private var solution: Map<Retailer, Warehouse> = model.retailers.associateWith { model.warehouses.random() }.toMutableMap()
     private var bestSolution: Map<Retailer, Warehouse> = solution.toMap()
     private var bestSolutionCost: Int = calculateCost(bestSolution)
 
@@ -38,7 +37,7 @@ class Solver(
     }
 
     // Optimize using Late Acceptance Hill Climbing
-    fun solveLAHC(n: Int = 1000, earlyStopping: Int = 10_000): Int {
+    fun solveLAHC(n: Int = 50, earlyStopping: Int = 10_000): Int {
         val costList = MutableList(n) { calculateCost(solution) }
         var k = 0
         var iterationsNotImproved = 0
