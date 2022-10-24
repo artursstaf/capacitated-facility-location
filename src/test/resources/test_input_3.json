@@ -7,13 +7,13 @@
     { "name": "Retailer5", "demand": 180 }
   ],
   "potential_warehouse_sites": [
-    { "name":  "WH1", "capacity": 500, "cost": 1001 },
+    { "name":  "WH1", "capacity": 1000000, "cost": 1000 },
     { "name":  "WH2", "capacity": 1000000, "cost": 1000 },
-    { "name":  "WH3", "capacity": 500, "cost": 1001 }
+    { "name":  "WH3", "capacity": 1000000, "cost": 1000 }
   ],
   "transportation_cost_matrix": [
     [2, 2, 2, 2, 2],
     [2, 2, 2, 2, 2],
-    [2, 2, 2, 2, 2]
+    [1, 1, 1, 1, 1]
   ]
 }

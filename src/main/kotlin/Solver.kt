@@ -9,7 +9,7 @@ class Solver(
 
 
     companion object {
-        private const val HARD_CONS_MULT = 1_000_000
+        private const val HARD_CONSTRAINT_MULTIPLIER = 1_000_000
     }
 
     private fun calculateCost(solution: Map<Retailer, Warehouse>) =
@@ -18,11 +18,11 @@ class Solver(
                 // Transportation costs (soft)
                 solution.entries.sumOf { (retailer, warehouse) -> warehouse.transportationCost[retailer]!! * retailer.demand } +
                 // Warehouse capacity exceeded
-                HARD_CONS_MULT * solution.values.toSet().map { warehouse ->
+                HARD_CONSTRAINT_MULTIPLIER * solution.values.toSet().map { warehouse ->
             if (warehouse.capacity < solution.entries.filter { it.value == warehouse }.sumOf { it.key.demand }) 1 else 0
         }.sum()
 
-    private fun hardConstraintsFailed() = solution.values.any { warehouse ->
+    private fun warehouseCapacityExceeded(solution: Map<Retailer, Warehouse>) = solution.values.toSet().any { warehouse ->
         warehouse.capacity < solution.entries.filter { it.value == warehouse }.sumOf { it.key.demand }
     }
 
@@ -73,7 +73,7 @@ class Solver(
             }
         }
 
-        println("Warehouse capacity exceeded: ${hardConstraintsFailed()}")
+        println("Warehouse capacity exceeded: ${warehouseCapacityExceeded(bestSolution)}")
         println("Cost: ${calculateCost(bestSolution)}")
         println("Warehouses used ${bestSolution.values.map { it.name }.toSet()} ")
         println("(Retailer:Warehouse) mapping: ")
