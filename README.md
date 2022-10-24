@@ -58,8 +58,8 @@ Programmas ieejas dati tiek uzdoti JSON formātā:
 Optimizācijas uzdevums minimizēt izmaksas, kas sastāv no transportēšanas izmaksu summas + noliktavas atvēršanas izmaksām.
 
 Papildus ir **cietie** nosacījumi:
-1. Klientu pieprasījums nedrikst pārsniegt konkrētās noliktavas kapacitāti
-2. Vienu ražotāju apkalpo tieši viena noliktava
+1. Klientu pieprasījums nedrikst pārsniegt konkrētās noliktavas kapacitāti.
+2. Vienu ražotāju apkalpo tieši viena noliktava.
 3. Noliktava ir atvērta, ja ir vismaz viens ražotājs, kas to izmanto.
 ![img_3.png](img_3.png)
 
@@ -94,7 +94,7 @@ private fun step(): MutableMap<Retailer, Warehouse> {
 
 #### 2.3. Izmaksu funkcija
 Sastāv no 3 daļām. 2 mīkstajiem nosacījumiem un 1 cietā nosacījuma.
-1. Noliktavas izmantošanas/aktivizēžanas/ražošanas izmaksām.
+1. Noliktavas izmantošanas/aktivizēžanas/būvniecības izmaksām.
 2. Transportēšanas izmaksām.
 3. Noliktavas kapacitātes nepārsniegšana **cietais** (tiek pareizināts ar lielu konstanti - tā, lai tas pārsver iepriekšējo izmaksu summas).
 ```
